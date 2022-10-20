@@ -17,7 +17,10 @@ function onFormInput(e) {
 
 function inputFeedbackData() {
   if (localStorage.getItem(STORAGE_KEY)) {
-    objFormData = JSON.parse(localStorage.getItem(STORAGE_KEY))
+    try {
+      objFormData = JSON.parse(localStorage.getItem(STORAGE_KEY))
+    }
+    catch (err) { console.log(err.name) }
 
     feedbackForm.elements.email.value = objFormData.email || "";
     feedbackForm.elements.message.value = objFormData.message || "";
