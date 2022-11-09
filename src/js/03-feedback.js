@@ -37,6 +37,7 @@ function onFormSubmit(e) {
   if(email.value && message.value){
     console.table(objFormData)
     e.target.reset()
+    objFormData = {}
     localStorage.removeItem(STORAGE_KEY)
   } else {
     alert("Write all fields!")
