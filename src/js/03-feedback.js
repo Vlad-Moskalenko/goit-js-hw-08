@@ -10,28 +10,37 @@ feedbackForm.addEventListener('input', throttle(onFormInput, 500))
 feedbackForm.addEventListener('submit', onFormSubmit)
 
 function onFormInput(e) {
-  objFormData[e.target.name] = e.target.value;
-
+  const {name, value} = e.target
+  objFormData[name] = value;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(objFormData))
 }
 
 function inputFeedbackData() {
+  const {email, message} = feedbackForm.elements;
+
   if (localStorage.getItem(STORAGE_KEY)) {
     try {
       objFormData = JSON.parse(localStorage.getItem(STORAGE_KEY))
     }
     catch (err) { console.log(err.name) }
 
-    feedbackForm.elements.email.value = objFormData.email || "";
-    feedbackForm.elements.message.value = objFormData.message || "";
+   email.value = objFormData.email || "";
+   message.value = objFormData.message || "";
   }
 }
 
 function onFormSubmit(e) {
+  const {email, message} = e.target
+
   e.preventDefault()
-  console.table(objFormData)
-  e.target.reset()
-  localStorage.removeItem(STORAGE_KEY)
+
+  if(email.value && message.value){
+    console.table(objFormData)
+    e.target.reset()
+    localStorage.removeItem(STORAGE_KEY)
+  } else {
+    alert("Write all fields!")
+  }
 }
 
 
